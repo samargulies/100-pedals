@@ -22,18 +22,12 @@ exports.handler = async ({ body, headers }) => {
 
     if (stripeEvent.type === 'checkout.session.completed') {
       const eventObject = stripeEvent.data.object;
-      const items = JSON.parse(eventObject.metadata.items);
-      const shippingDetails = eventObject.shipping;
-
-      // Here make an API call / send an email to your fulfillment provider.
-      const purchase = { items, shippingDetails };
-      console.log(`📦 Fulfill purchase:`, JSON.stringify(purchase, null, 2));
       // Send and email to our fulfillment provider using Sendgrid.
       const msg = {
         to: process.env.FULFILLMENT_EMAIL_ADDRESS,
         from: process.env.FROM_EMAIL_ADDRESS,
-        subject: `New purchase from ${shippingDetails.name}`,
-        text: JSON.stringify(purchase, null, 2),
+        subject: `New purchase`,
+        text: JSON.stringify(eventObject, null, 2),
       };
       await sgMail.send(msg);
     }
