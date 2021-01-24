@@ -19,19 +19,40 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
  */
 const inventory = require('./data/products.json');
 
+function getShippingPriceData(countryCode) {
+  let price = 1500;
+  let name = 'International';
+  if (countryCode === 'US') {
+    price = 300;
+    name = 'US';
+  }
+  if (countryCode === 'CA') {
+    price = 1000;
+    name = 'Canada';
+  }
+  return {
+    currency: 'usd',
+    unit_amount: price,
+    product_data: {
+      name: `Shipping (${name})`,
+    },
+  };
+}
+
 exports.handler = async (event) => {
-  const { sku, quantity } = JSON.parse(event.body);
-  const product = inventory.find((p) => p.sku === sku);
+  const { quantity, shippingCountry } = JSON.parse(event.body);
 
   // ensure that the quantity is within the allowed range
   const validatedQuantity = quantity > 0 && quantity < 11 ? quantity : 1;
 
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
+    allow_promotion_codes: true,
     payment_method_types: ['card'],
     billing_address_collection: 'auto',
     shipping_address_collection: {
-      allowed_countries: ['US', 'CA'],
+      allowed_countries: ['US', 'MX', 'CA', 'JP', 'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK']
+      ,
     },
 
     /*
@@ -44,31 +65,14 @@ exports.handler = async (event) => {
     cancel_url: process.env.URL,
     line_items: [
       {
-        price_data: {
-          currency: 'usd',
-          unit_amount: product.amount,
-          product_data: {
-            name: product.name,
-            description: product.description,
-            images: [product.image],
-          },
-        },
+        price: process.env.BOOK_PRICE_ID,
         quantity: validatedQuantity,
       },
+      {
+        price_data: getShippingPriceData(shippingCountry),
+        quantity: 1,
+      }
     ],
-    // We are using the metadata to track which items were purchased.
-    // We can access this meatadata in our webhook handler to then handle
-    // the fulfillment process.
-    // In a real application you would track this in an order object in your database.
-    metadata: {
-      items: JSON.stringify([
-        {
-          sku: product.sku,
-          name: product.name,
-          quantity: validatedQuantity,
-        },
-      ]),
-    },
   });
 
   return {
