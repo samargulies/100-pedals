@@ -1,0 +1,2 @@
+# Redirect short referrals to long ones
+/* ref=:ref /:splat?utm_source=:ref&utm_medium=:ref&utm_campaign=:ref 301
