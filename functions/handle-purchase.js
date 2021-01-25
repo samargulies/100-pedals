@@ -12,6 +12,13 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+function format(amount, currency) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+  }).format((amount / 100).toFixed(2));
+}
+
 exports.handler = async ({ body, headers }) => {
   try {
     const stripeEvent = stripe.webhooks.constructEvent(
@@ -22,6 +29,16 @@ exports.handler = async ({ body, headers }) => {
 
     if (stripeEvent.type === 'checkout.session.completed') {
       const eventObject = stripeEvent.data.object;
+      let text = `
+        ${eventObject.shipping.name}
+        ${eventObject.shipping.address.line1}
+        ${eventObject.shipping.address.line2 || ''}
+        ${eventObject.shipping.address.city}, ${eventObject.shipping.address.state}
+        ${eventObject.shipping.address.postal_code}
+        ${eventObject.shipping.address.country}
+        
+        Purchase amount: ${format(eventObject.amount_total)}
+      `;
       // Send and email to our fulfillment provider using Sendgrid.
       const msg = {
         to: process.env.FULFILLMENT_EMAIL_ADDRESS,
