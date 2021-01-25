@@ -58,12 +58,6 @@
 
   <script src="https://js.stripe.com/v3/"></script>
   <script>
-    function format(amount, currency) {
-      return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency,
-      }).format((amount / 100).toFixed(2));
-    }
 
     async function handleSubmit(event) {
       event.preventDefault();
