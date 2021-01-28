@@ -11,11 +11,15 @@ h1 {
   font-size: 1.875em;
   color: var(--highlight);
   font-weight: 800;
-  margin-top: 0;
+  margin: 0;
 }
 
 p {
-  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.note {
+  color: #666;
 }
 
 .site-description {
@@ -147,8 +151,7 @@ footer a {
   box-shadow: 5px 5px 20px rgba(170, 170, 170, 0.349);
   border-radius: 8px;
   grid-gap: 1em;
-  margin-bottom: 1.5em;
-}
+  margin-top: 1em;}
 
 .product .description {
   color: #777;
