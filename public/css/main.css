@@ -189,7 +189,10 @@ footer a {
   font-size: 0.75em;
 }
 
-.product button {
+.product button,
+.product .button {
+  display: inline-block;
+  text-decoration: none;
   background: var(--highlight);
   border: none;
   border-radius: 0.25rem;
