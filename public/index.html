@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Daddy Has 100 Pedals</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Daddy Has 100 Pedals</title>
-  <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<body>
-  <main>
-    <p class="imprint"><strong>Shy Boyz Books</strong> Presents</p>
-    <h1>My Daddy Has 100 Pedals</h1>
-    <p class="site-description">Billy Cardigan, host of YouTube’s Effects & Pedals Arena Corner takes young readers on a
-      vivid journey through the grown-up hobby of collecting guitar pedals and gear. </p>
-    <div class="product">
-      <div class="book-container">
-        <div class="book"><img alt="My Daddy has 100 Pedals" src="img/cover.jpg"></div>
-      </div>
-      <div>
-        <h2>My Daddy Has 100 Pedals</h2>
-        <p class="description"><strong class="price">$15</strong> A book by Billy Cardigan</p>
-        <a class="button" href="https://www.amazon.com/gp/product/B08VCN6BSJ/ref=as_li_tl?ie=UTF8&tag=shyboyz-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=B08VCN6BSJ&linkId=42d2229197c33f04380f0d010ec04f90">Buy Now</a>
-        <!-- <form action="/.netlify/functions/create-checkout" method="post">
+  <body>
+    <main>
+      <p class="imprint"><strong>Shy Boyz Books</strong> Presents</p>
+      <h1>My Daddy Has 100 Pedals</h1>
+      <p class="site-description">
+        Billy Cardigan, host of YouTube’s Effects & Pedals Arena Corner takes
+        young readers on a vivid journey through the grown-up hobby of
+        collecting guitar pedals and gear.
+      </p>
+      <div class="product">
+        <div class="book-container">
+          <div class="book">
+            <img alt="My Daddy has 100 Pedals Book Cover" src="img/cover.jpg" />
+          </div>
+        </div>
+        <div>
+          <h2>My Daddy Has 100 Pedals</h2>
+          <p class="description">
+            <strong class="price">$20</strong> A book by Billy Cardigan
+          </p>
+          <a
+            class="button"
+            href="https://www.amazon.com/gp/product/B08VCN6BSJ/ref=as_li_tl?ie=UTF8&tag=shyboyz-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=B08VCN6BSJ&linkId=42d2229197c33f04380f0d010ec04f90"
+            >Buy Now</a
+          >
+          <!-- <form action="/.netlify/functions/create-checkout" method="post">
           <div class="input">
             <label for="quantity">Quantity</label>
             <select name="quantity" id="quantity">
@@ -49,58 +59,110 @@
           <button type="submit">Buy Now</button>
           <p class="note"><strong>Note:</strong> The first printing is now sold out! New orders should be shipping by mid-March.</p>
         </form> -->
+        </div>
       </div>
-    </div>
-  </main>
+      <p class="site-description">
+        New: The world’s first fully illustrated children’s book about
+        synthesizers!
+      </p>
 
-  <footer>
-    <p>
-    </p>
-  </footer>
+      <div class="product">
+        <div class="book-container">
+          <div class="book">
+            <img
+              alt="My Daddy has 100 Synths Book Cover"
+              src="img/synths-cover.jpg"
+            />
+          </div>
+        </div>
+        <div>
+          <h2>My Daddy Has 100 Synths</h2>
+          <p class="description">
+            <strong class="price">$20</strong> A book by Billy Cardigan
+          </p>
+          <a
+            class="button"
+            href="https://www.amazon.com/My-Daddy-Has-100-Synths/dp/B09M2LPGHP/ref=as_li_tl?ie=UTF8&tag=shyboyz-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=B08VCN6BSJ&linkId=42d2229197c33f04380f0d010ec04f90"
+            >Buy Now</a
+          >
+          <!-- <form action="/.netlify/functions/create-checkout" method="post">
+          <div class="input">
+            <label for="quantity">Quantity</label>
+            <select name="quantity" id="quantity">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <div class="input">
+            <label for="shipping">Shipping</label>
+            <select name="shipping" id="shipping">
+              <option value="US">US - $3</option>
+              <option value="CA">Canada - $10</option>
+              <option value="">Global - $15</option>
+            </select>
+          </div>
+          <button type="submit">Buy Now</button>
+          <p class="note"><strong>Note:</strong> The first printing is now sold out! New orders should be shipping by mid-March.</p>
+        </form> -->
+        </div>
+      </div>
+    </main>
 
-  <script src="https://js.stripe.com/v3/"></script>
-  <script>
+    <footer>
+      <p class="site-description">
+        Brought to you by <a href="https://thebitdepth.com">The Bit Depth</a>.
+        An exciting new website exploring synths, pedals, and music technology.
+      </p>
+    </footer>
 
-    async function handleSubmit(event) {
-      event.preventDefault();
-      document
-        .querySelectorAll('button')
-        .forEach((button) => (button.disabled = true));
-
-
-      const form = new FormData(event.target);
-      const data = {
-        quantity: Number(form.get('quantity')),
-        shippingCountry: form.get('shipping'),
-      };
-      const response = await fetch('/.netlify/functions/create-checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      }).then((res) => res.json());
-
-      const stripe = Stripe(response.publishableKey);
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: response.sessionId,
-      });
-
-      if (error) {
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      async function handleSubmit(event) {
+        event.preventDefault();
         document
-          .querySelectorAll('button')
-          .forEach((button) => (button.disabled = false));
-        console.error(error);
+          .querySelectorAll("button")
+          .forEach((button) => (button.disabled = true));
+
+        const form = new FormData(event.target);
+        const data = {
+          quantity: Number(form.get("quantity")),
+          shippingCountry: form.get("shipping"),
+        };
+        const response = await fetch("/.netlify/functions/create-checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }).then((res) => res.json());
+
+        const stripe = Stripe(response.publishableKey);
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: response.sessionId,
+        });
+
+        if (error) {
+          document
+            .querySelectorAll("button")
+            .forEach((button) => (button.disabled = false));
+          console.error(error);
+        }
       }
-    }
 
-    function init() {
-      const form = document.querySelector('form');
-      form.addEventListener('submit', handleSubmit);
-    }
+      function init() {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", handleSubmit);
+      }
 
-    init();
-  </script>
-</body>
-
+      init();
+    </script>
+  </body>
 </html>
